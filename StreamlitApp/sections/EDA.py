@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
-from config import DATA_PATH
+from StreamlitApp.config import DATA_PATH
 
 
 
