@@ -1,0 +1,1 @@
+DATA_PATH = "D:\PROJECT\data\loan_data.csv"
