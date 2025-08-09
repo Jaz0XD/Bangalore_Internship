@@ -1,1 +1,1 @@
-DATA_PATH = "D:\PROJECT\data\loan_data.csv"
+DATA_PATH = "D:\PROJECT\StreamlitApp\data\loan_data.csv"
