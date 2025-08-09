@@ -1,6 +1,7 @@
 import streamlit as st
 from sections import EDA #, ModelTraining, ModelInference
 
+
 st.sidebar.title('Navigation')
 page = st.sidebar.radio('Go to', ['Home', 'EDA', 'Model Training', 'Model Inference'])
 
