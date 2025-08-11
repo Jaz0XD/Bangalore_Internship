@@ -9,8 +9,9 @@ from utils import get_missing_value_graph, categorical_graph, get_histogram, kde
 
 
 def run():
-    df = pd.read_csv(DATA_PATH)
-    df = df.drop(columns=['Loan_ID'])
+    
+    st.session_state['data'] = pd.read_csv(DATA_PATH)
+    st.session_state['data'] = st.session_state['data'].drop(columns=['Loan_ID'])
     eda_options = st.sidebar.selectbox('Select EDA Option', ['Show Data', 
                                                           'Missing Values',
                                                           'Categorical Analysis',
@@ -18,22 +19,22 @@ def run():
     
     if eda_options == 'Show Data':
         st.subheader('Raw Dataset')
-        st.dataframe(df.head(4))
+        st.dataframe(st.session_state['data'].head(4))
     elif eda_options == 'Missing Values':
-        graph = get_missing_value_graph(df)
+        graph = get_missing_value_graph(st.session_state['data'])
         st.pyplot(graph)
     elif eda_options == 'Categorical Analysis':
         st.subheader('Categorical Analysis')
-        cat_columns = df.select_dtypes(include=['object']).columns.tolist()
+        cat_columns = st.session_state['data'].select_dtypes(include=['object']).columns.tolist()
         selected_cat = st.selectbox('Select Categorical Column', cat_columns)
-        graph = categorical_graph(df, selected_cat)
+        graph = categorical_graph(st.session_state['data'], selected_cat)
         st.pyplot(graph)
     elif eda_options == 'Numerical Analysis':
         st.subheader('Numerical Analysis')
         selected_num = st.selectbox('Select Graph Type',['Histogram', 'KDE'])
         if selected_num == 'Histogram':
-            graph = get_histogram(df)
+            graph = get_histogram(st.session_state['data'])
         elif selected_num == 'KDE':
-            graph = kde_plot(df)
+            graph = kde_plot(st.session_state['data'])
         st.pyplot(graph)
     

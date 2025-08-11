@@ -46,3 +46,34 @@ def kde_plot(df):
     col_three = cont_columns[2]
     sns.kdeplot(data = df[col_three], fill = True, ax= axes[2])
     return fig
+
+def fill_na(df, fill_type):
+    for col in df.columns:
+        if df[col].isnull().sum().tolist()>0:
+            if df[col].dtype == object:
+                mode = df[col].mode()[0]
+                df[col] = df[col].fillna(mode)
+            else:
+                if fill_type == 'Mean':
+                    mean_value = df[col].mean()
+                    df[col] = df[col].fillna(mean_value)
+                elif fill_type == 'Median':
+                    median_value = df[col].median()
+                    df[col] = df[col].fillna(median_value)
+                else:
+                    mode_value = df[col].mode()
+                    df[col] = df[col].fillna(mode_value)
+    return df
+
+def get_map(df, col_name):
+    mapp = {}
+    temp_list = df[col_name].unique().tolist()
+    for index, val in enumerate(temp_list):
+        mapp[val] = index
+    return mapp
+
+def categorical_encoding(df, cat_cols):
+    for col in cat_cols:
+        temp_map = get_map(df, col)
+        df[col] = df[col].map(temp_map)
+    return df
