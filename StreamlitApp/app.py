@@ -1,5 +1,5 @@
 import streamlit as st
-from sections import EDA , Train #, ModelInference
+from sections import EDA , Train, Inference
 
 
 st.sidebar.title('Navigation')
@@ -29,3 +29,5 @@ elif page == 'EDA':
 elif page == 'Model Training':
     Train.run()
     
+elif page == 'Model Inference':
+    Inference.run()

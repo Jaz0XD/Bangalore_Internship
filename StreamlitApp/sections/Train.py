@@ -1,3 +1,4 @@
+# Importing Dependencies
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -5,14 +6,16 @@ import streamlit as st
 import pickle
 import os
 
+# Importing Sklearn libraries
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-
-from utils import fill_na, categorical_encoding
 from sklearn.preprocessing import MinMaxScaler
+
+# Importing Files & Functions
+from utils import fill_na, categorical_encoding
 from config import (CAT_COLS, CONT_COLS, MODEL_SAVE_PATH)
 
 def run():
@@ -25,9 +28,9 @@ def run():
     df_encoded = categorical_encoding(st.session_state['filled_data'], CAT_COLS)
 
     if st.button('Perform Scaling'):
-        scaler = MinMaxScaler()
+        st.session_state['scaler'] = MinMaxScaler()
         st.success('Data Frame successfully scaled')
-        df_encoded[CONT_COLS] = scaler.fit_transform(df_encoded[CONT_COLS])
+        df_encoded[CONT_COLS] = st.session_state['scaler'].fit_transform(df_encoded[CONT_COLS])
         st.dataframe(df_encoded.head(4))
 
     x = df_encoded.drop(columns=['Loan_Status'])
